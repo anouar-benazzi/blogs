@@ -27,10 +27,10 @@ class AddAdmin
      */
     public function handle(AdminCreated $event)
     {
-        //
+        
         if ($event->user->role_id == 2) {
             $admin = Admin::create(['email'=>$event->user->email,
            'password' => $event->user->password]);
-              }
+              } 
     }
 }

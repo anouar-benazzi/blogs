@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\AdminCreated;
+use App\Listeners\AddAdmin;
 use App\Models\User;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Event;
@@ -19,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        AdminCreated::class => [
+            AddAdmin::class,
         ],
     ];
 
