@@ -31,7 +31,7 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         //
-        return $user->role_id == 1 ;
+        return auth()->user()->role_id == 1 || auth()->user()->role_id == 2 ;
 
     }
 
@@ -61,6 +61,19 @@ class UserPolicy
     }
 
     /**
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $model
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function manage()
+    {
+        //
+        return auth()->user()->role_id == 1 || auth()->user()->role_id == 2 ;
+
+    }
+
+        /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user

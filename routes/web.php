@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -77,19 +78,19 @@ Route::get('/posts/{post}', [PostController::class, 'show'] )->middleware('auth'
 
 
 // show add admin form
-Route::get('/SuperAdmin/add_admin', [UserController::class, 'ShowAdminForm'] )->middleware('auth')->name('ShowAdminForm');
+Route::get('/SuperAdmin/add_admin', [AdminController::class, 'ShowAdminForm'] )->middleware('auth')->name('ShowAdminForm');
 
 // store admin
-Route::post('/SuperAdmin/admins', [UserController::class, 'StoreAdmin'] )->middleware('auth');
+Route::post('/SuperAdmin/admins', [AdminController::class, 'StoreAdmin'] )->middleware('auth');
 
 // manage users
-Route::get('/SuperAdmin/manage_users', [UserController::class, 'manage'] )->middleware('auth')->name('manage_users');
+Route::get('/SuperAdmin/manage_users', [AdminController::class, 'manage'] )->middleware('auth')->name('manage_users');
 
 //delete user
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->middleware('auth')->name('delete_user');
+Route::delete('/users/{user}', [AdminController::class, 'destroy'])->middleware('auth')->name('delete_user');
 
 //show user
-Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth')->name('showUser');
+Route::get('/users/{user}', [AdminController::class, 'show'])->middleware('auth')->name('showUser');
 
 //update User
-Route::put('/users/{user}', [UserController::class, 'update'])->name("updateUser")->middleware('auth');
+Route::put('/users/{user}', [AdminController::class, 'update'])->name("updateUser")->middleware('auth');
