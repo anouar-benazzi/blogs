@@ -18,8 +18,6 @@ class PostController extends Controller
      public function index()
     {
 
-
-
         //show all posts
         return view('Posts.index',[
             'posts' => Post::latest()->filter(request(['tag','search']))->paginate(6)

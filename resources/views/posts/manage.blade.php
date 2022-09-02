@@ -33,7 +33,7 @@
                         Show</a>
                 </td>
                     
-                    @if (auth()->user()->role_id == $post->user->role_id)
+                    @if (auth()->user()->role_id == $post->user->role_id || auth()->user()->role_id == 1 )
                     <td
                         class="px-4 py-8 border-t border-b border-gray-300 text-lg">
                         <a href="/posts/{{$post->id}}/edit"

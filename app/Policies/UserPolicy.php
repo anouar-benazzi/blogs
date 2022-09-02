@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -30,6 +31,8 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         //
+        return $user->role_id == 1 ;
+
     }
 
     /**
@@ -51,9 +54,10 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user)
     {
         //
+        return $user->role_id == 1 ;
     }
 
     /**

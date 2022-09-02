@@ -3,16 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\AddAdminRequest;
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\RegisterUserRequest;
-use App\Models\Admin;
 
 class UserController extends Controller
 {
+
+    public function show(User $user)
+    {
+        //show single post
+        $this->authorize('view', $user);
+
+
+        return view('users.show',[
+            'user' =>$user,
+
+        ]);
+    }
+
+    // update USer
+
+    public function update(UpdateUserRequest $request, User $user) {
+
+        $this->authorize('update', auth()->user());
+
+        if (password_verify($request->OldPassword, $user->password))  {
+
+                 $user->update($request->FiltredAttributes());
+            
+           return back()->with('message',trans('User updated successfully'));
+
+        }
+        else {
+            return back()->with('message',trans('something went wrong'));
+        }
+
+
+    }
+
+
     // show register/create form
     public function create()
     {

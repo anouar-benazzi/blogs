@@ -88,3 +88,8 @@ Route::get('/SuperAdmin/manage_users', [UserController::class, 'manage'] )->midd
 //delete user
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->middleware('auth')->name('delete_user');
 
+//show user
+Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth')->name('showUser');
+
+//update User
+Route::put('/users/{user}', [UserController::class, 'update'])->name("updateUser")->middleware('auth');
