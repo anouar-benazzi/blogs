@@ -24,6 +24,19 @@ class AdminController extends Controller
     }
 
     
+    public function edit(User $user)
+    {
+        //show single post
+        $this->authorize('update', $user);
+
+
+        return view('users.edit',[
+            'user' =>$user,
+
+        ]);
+    }
+
+
     public function ShowAdminForm(User $user)
     {
         $this->authorize('create', $user);
@@ -37,9 +50,6 @@ class AdminController extends Controller
 
          //create user
          $user = User::create($request->filtredAttributes());
-
-        //TO BE MOVED TO THE OBSERVER AFTER THE CREATION OF THE USER
-         //$admin = Admin::create($validatedData1);
         
          return redirect('/')->with('message', 'Admin created');
     }
@@ -48,6 +58,7 @@ class AdminController extends Controller
     {
 
         //when() fl elqoulnt 
+
         $this->authorize('manage',auth()->user());
 
 
@@ -77,18 +88,10 @@ class AdminController extends Controller
 
             $this->authorize('update', auth()->user());
     
-            if (password_verify($request->OldPassword, $user->password))  {
-    
-                     $user->update($request->FiltredAttributes());
+            $user->update($request->FiltredAttributes());
                 
                return back()->with('message',trans('User updated successfully'));
-    
-            }
-            else {
-                return back()->with('message',trans('something went wrong'));
-            }
-    
-    
+
         }
 
 }

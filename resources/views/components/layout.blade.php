@@ -35,7 +35,11 @@
                 @auth
                 <li>
                     <spna class="font-bold uppercase">
-                        Welcome {{auth()->user()->name}}
+                        Welcome 
+                        <a href={{route('MyProfile')}} class="hover:text-laravel"
+                        >
+                        {{auth()->user()->name}}</a
+                    >
                     </spna>
                 </li>
                 <li>

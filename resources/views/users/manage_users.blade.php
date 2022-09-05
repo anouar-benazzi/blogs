@@ -25,7 +25,7 @@
                     @if (auth()->user()->role_id == 1)
                     <td
                     class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                    <a href={{route('showUser',$user->id)}}
+                    <a href={{route('showEditForm',$user->id)}}
                         class="text-blue-400 px-6 py-2 rounded-xl"
                         ><i
                             class="fa-solid fa-pen-to-square"
@@ -37,7 +37,7 @@
                     
                     <td
                         class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                        <a href=""
+                        <a href={{route('showUser',$user->id)}}
                             class="text-blue-400 px-6 py-2 rounded-xl"
                             ><i
                                 class="fa-solid fa-pen-to-square"

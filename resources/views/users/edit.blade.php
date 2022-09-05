@@ -4,7 +4,7 @@
             <h1
                 class="text-3xl text-center font-bold my-6 uppercase"
             >
-                Show User
+                Update User
             </h1>
         </header>
 
@@ -55,33 +55,38 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <div class="row gutters">
+                                    <form method="POST" action={{route("updateUser", $user->id)}} enctype="multipart/form-data">
+                                        @csrf
+                                        @method('put')
 
-                                        <div class="mb-6">
-                                            <label for="name" class="inline-block text-lg mb-2">
-                                                Name : {{$user->name}}
-                                            </label>
-                       
+              
                                         </div>
-                                
-                                        <div class="mb-6">
-                                            <label for="email" class="inline-block text-lg mb-2"
-                                                >Email : {{$user->email}}
-                                                </label
-                                            >
-                                        </div>
-
 
                                         <div class="mb-6">
                                             <label
                                                 for="role_id"
                                                 class="inline-block text-lg mb-2"
                                             >
-                                            
-                                                role ID : {{$user->role_id}}
+                                                role ID
                                             </label>
-                             
+                                            <input
+                                                type="text"
+                                                class="border border-gray-200 rounded p-2 w-full"
+                                                name="role_id" value="{{old('role_id')}}"
+                                            />
+                                            @Error('role_id')
+                                            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                                            @enderror
                                         </div>
-
+                                        <div class="mb-6">
+                                            <button
+                                                type="submit"
+                                                class="bg-laravel text-white rounded py-2 px-4 hover:bg-black"
+                                            >
+                                                Update
+                                            </button>
+                                        </div>
+                                    </form>
 
                                 </div>
                             </div>

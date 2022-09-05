@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,20 +25,25 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [    'name' => ['required','min:3'],
-        'password'=> 'required | confirmed | min:6',
-     'email' => ['required', 'email', Rule::unique('users','email')],
+        return [   
      'role_id' => 'required'
     ];
     }
 
     public function FiltredAttributes() {
-
-        $validatedData = $this->validated();
+    
+               $validatedData = $this->validated();
+               
         
          // Hash password
          $validatedData['password'] = bcrypt($this['password']);
 
-         return $validatedData;
+         return $validatedData ;
+
+   }
+
+
+
+   
     }
-}
+

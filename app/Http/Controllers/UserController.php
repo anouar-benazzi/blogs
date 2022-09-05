@@ -11,11 +11,16 @@ use App\Http\Requests\AddAdminRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UpdateProfileRequest;
 
 class UserController extends Controller
 {
 
+    public function show(User $user)
+    {
 
+        return view('users.profile');
+    }
 
     // show register/create form
     public function create()
@@ -64,6 +69,21 @@ class UserController extends Controller
         return back()->withErrors(['email' =>'Invalid Credentials'])->onlyInput('email');
         
         }
+                // update My Profile
+
+        public function update(UpdateProfileRequest $request, User $user) {
+
+                        # code...
+                        $user->update($request->FiltredAttributes());
+                        return back()->with('message',trans('profile updated successfully'));
+
+                    
+                        
+                       return back()->with('message',trans('profile wasnt updated successfully'));
+        
+        }
+
+
 
 
 

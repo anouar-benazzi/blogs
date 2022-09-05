@@ -63,6 +63,12 @@ Route::get('/login', [UserController::class, 'login'] )->name('login')->middlewa
 // Log In User
 Route::post('/users/athenticate', [UserController::class, 'athenticate'] );
 
+//show profile page form
+Route::get('/users/profile', [UserController::class, 'show'])->middleware('auth')->name('MyProfile');
+
+//update profile
+Route::put('/users/profile/{user}', [UserController::class, 'update'])->name("updateProfile")->middleware('auth');
+
 // manage posts
 
 Route::get('/posts/manage', [PostController::class, 'manage'] )->middleware('auth');
@@ -92,5 +98,9 @@ Route::delete('/users/{user}', [AdminController::class, 'destroy'])->middleware(
 //show user
 Route::get('/users/{user}', [AdminController::class, 'show'])->middleware('auth')->name('showUser');
 
+//show user edit form
+Route::get('/users/{user}/edit', [AdminController::class, 'edit'])->middleware('auth')->name('showEditForm');
+
 //update User
 Route::put('/users/{user}', [AdminController::class, 'update'])->name("updateUser")->middleware('auth');
+
