@@ -47,6 +47,8 @@ class UserPolicy
         return $user->role_id == 1;
     }
 
+    
+
     /**
      * Determine whether the user can update the model.
      *
@@ -56,9 +58,24 @@ class UserPolicy
      */
     public function update(User $user)
     {
-        //
+        
         return $user->role_id == 1 ;
     }
+
+        /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $model
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function updateProfile(User $user)
+    {
+        
+        return $user->id == auth()->user()->id ;
+    }
+
+
 
     /**
      *

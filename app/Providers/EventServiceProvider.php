@@ -22,9 +22,8 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        AdminCreated::class => [
-            AddAdmin::class,
-        ],
+ 
+
     ];
 
     /**
@@ -46,6 +45,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function shouldDiscoverEvents()
     {
-        return false;
+        return true;
     }
 }

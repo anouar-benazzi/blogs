@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Admin;
+use App\Models\Images;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Redis;
-use App\Http\Requests\AddAdminRequest;
 use App\Http\Requests\LoginUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdateProfilePictureRequest;
 
 class UserController extends Controller
 {
@@ -41,6 +38,7 @@ class UserController extends Controller
         }
 
         // logout User
+        
         public function logout(Request $request)
         {
             auth()->logout();
@@ -73,16 +71,27 @@ class UserController extends Controller
 
         public function update(UpdateProfileRequest $request, User $user) {
 
-                        # code...
-                        $user->update($request->FiltredAttributes());
-                        return back()->with('message',trans('profile updated successfully'));
 
-                    
+                        $this->authorize('updateProfile', auth()->user());
+                           
+                        $user->update($request->FiltredAttributes());
+
+                        return back()->with('message',trans('profile updated successfully'));
                         
-                       return back()->with('message',trans('profile wasnt updated successfully'));
         
         }
 
+
+        public function updatePicture(UpdateProfilePictureRequest $request) {
+
+
+            $this->authorize('updateProfile', auth()->user());
+
+            $request->FiltredAttributes();
+               
+            return back()->with('message',trans('profile picture updated successfully'));
+            
+}
 
 
 

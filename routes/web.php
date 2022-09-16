@@ -104,3 +104,7 @@ Route::get('/users/{user}/edit', [AdminController::class, 'edit'])->middleware('
 //update User
 Route::put('/users/{user}', [AdminController::class, 'update'])->name("updateUser")->middleware('auth');
 
+//update profile picture
+Route::put('/users/{user}', [UserController::class, 'updatePicture'])->name("updateProfilePicture")->middleware('auth');
+
+

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Images;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\CommentRequest;
-use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Validation\Rule as ValidationRule;
 use TijsVerkoyen\CssToInlineStyles\Css\Rule\Rule as RuleRule;
 
@@ -19,6 +22,7 @@ class PostController extends Controller
     {
 
         //show all posts
+
         return view('Posts.index',[
             'posts' => Post::latest()->filter(request(['tag','search']))->paginate(6)
         ]);
@@ -27,6 +31,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //show single post
+
         $this->authorize('view', $post);
 
 
@@ -45,9 +50,12 @@ class PostController extends Controller
      
       //store post data
 
-      public function store(PostRequest $request) {
+      public function store(PostRequest $request, Post $post) {
+
         
-        Post::create($request->FiltredAttributes());
+        $post = Post::create($request->FiltredAttributes($post));
+
+       
 
         return Redirect('/')->with('message','post created successfully');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Images;
 use App\Rules\ValidatePassword;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -38,7 +39,7 @@ class UpdateProfileRequest extends FormRequest
 
 
     public function FiltredAttributes() {
-    
+
         $validatedData = $this->validated();
  
         // Hash password
