@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -30,6 +31,8 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         //
+        return auth()->user()->role_id == 1 || auth()->user()->role_id == 2 ;
+
     }
 
     /**
@@ -44,6 +47,8 @@ class UserPolicy
         return $user->role_id == 1;
     }
 
+    
+
     /**
      * Determine whether the user can update the model.
      *
@@ -51,12 +56,41 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user)
     {
-        //
+        
+        return $user->role_id == 1 ;
     }
 
+        /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $model
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function updateProfile(User $user)
+    {
+        
+        return $user->id == auth()->user()->id ;
+    }
+
+
+
     /**
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $model
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function manage()
+    {
+        //
+        return auth()->user()->role_id == 1 || auth()->user()->role_id == 2 ;
+
+    }
+
+        /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user

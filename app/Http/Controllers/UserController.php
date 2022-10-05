@@ -3,16 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Images;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Redis;
-use App\Http\Requests\AddAdminRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
-use App\Models\Admin;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdateProfilePictureRequest;
 
 class UserController extends Controller
 {
+
+    public function show(User $user)
+    {
+
+        return view('users.profile');
+    }
+
     // show register/create form
     public function create()
     {
@@ -32,6 +38,7 @@ class UserController extends Controller
         }
 
         // logout User
+        
         public function logout(Request $request)
         {
             auth()->logout();
@@ -60,49 +67,34 @@ class UserController extends Controller
         return back()->withErrors(['email' =>'Invalid Credentials'])->onlyInput('email');
         
         }
+                // update My Profile
 
-        public function ShowAdminForm(User $user)
-        {
-            $this->authorize('create', $user);
-            return view('users.add_admin');
+        public function update(UpdateProfileRequest $request, User $user) {
+
+
+                        $this->authorize('updateProfile', auth()->user());
+                           
+                        $user->update($request->FiltredAttributes());
+
+                        return back()->with('message',trans('profile updated successfully'));
+                        
+        
         }
 
 
-        public function StoreAdmin(AddAdminRequest $request, User $user)
-        {      
+        public function updatePicture(UpdateProfilePictureRequest $request) {
+
+
+            $this->authorize('updateProfile', auth()->user());
+
+            $request->FiltredAttributes();
+               
+            return back()->with('message',trans('profile picture updated successfully'));
             
-            $this->authorize('create', $user);
-
-             //create user
-             $user = User::create($request->filtredAttributes());
-
-            //TO BE MOVED TO THE OBSERVER AFTER THE CREATION OF THE USER
-             //$admin = Admin::create($validatedData1);
-            
-             return redirect('/')->with('message', 'Admin created');
-        }
-
-        public function manage()
-        {
-
-            //when() fl elqoulnt 
-
-           return view('users.manage_users', [
-            'users'=>(auth()->user()->role_id == 1) ? User::all() : User::where('role_id',3)->get()
-           ] );
+}
 
 
-        }
 
-            // delete USer
 
-    public function destroy(User $user)
-    {
-        // make sure logged in user is the superAdmin
-
-        $user->delete();
-
-        return redirect('/')->with('message','user has been deleted successfully');
-    }
         
 }

@@ -4,7 +4,7 @@
             <h1
                 class="text-3xl text-center font-bold my-6 uppercase"
             >
-                Manage Posts
+                Manage Users
             </h1>
         </header>
 
@@ -22,26 +22,27 @@
                             {{$user->name}}
                         </a>
                     </td>
-                    
+                    @if (auth()->user()->role_id == 1)
                     <td
                     class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                    <a href="/posts/{{$user->id}}"
+                    <a href={{route('showEditForm',$user->id)}}
                         class="text-blue-400 px-6 py-2 rounded-xl"
                         ><i
                             class="fa-solid fa-pen-to-square"
                         ></i>
-                        Show</a
+                        Edit</a
                     >
                 </td>
+                @endif
                     
                     <td
                         class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                        <a href="/posts/{{$user->id}}/edit"
+                        <a href={{route('showUser',$user->id)}}
                             class="text-blue-400 px-6 py-2 rounded-xl"
                             ><i
                                 class="fa-solid fa-pen-to-square"
                             ></i>
-                            Edit</a
+                            show</a
                         >
                     </td>
                     <td

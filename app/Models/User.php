@@ -4,11 +4,12 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Images;
 use App\Events\AdminCreated;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -65,4 +66,12 @@ class User extends Authenticatable
         public function role(){
             return $this->belongsTo(Role::class, 'role_id');
         }
+
+
+        public function image()
+        {
+            return $this->morphOne(Images::class, 'imageable')->latestOfMany();
+        }
+
+
 }

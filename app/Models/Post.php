@@ -3,12 +3,17 @@
 namespace App\Models;
 
 
+use App\Events\PostCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
     use HasFactory;
+
+    protected $dispatchesEvents =[
+        'created' => PostCreated::class
+    ];
 
     protected $fillable = ['user_id','title','description','tags'];
 
@@ -42,5 +47,14 @@ class Post extends Model
     public function getLastComment()
     {
         return $this->comments()->latest()->first();
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Images::class, 'imageable');
+    }
+    public function latestImage()
+    {
+        return $this->morphOne(Images::class, 'imageable')->latestOfMany();
     }
 }

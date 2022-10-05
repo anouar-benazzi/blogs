@@ -57,7 +57,7 @@ class PostPolicy
     public function update(User $user, Post $post)
     {
         //
-        return $user->id === $post->user_id;
+        return $user->id === $post->user_id || $user->role_id == 1;
     }
 
     /**
@@ -71,7 +71,7 @@ class PostPolicy
     {
         //
 
-        return $user->id == $post->user_id || $user->role_id == 2;
+        return $user->id == $post->user_id || $user->role_id == 2 || $user->role_id == 1;
 
     }
 

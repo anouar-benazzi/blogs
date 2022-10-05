@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Post;
 use App\Models\Images;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostRequest extends FormRequest
+class UpdateProfilePictureRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,19 +25,18 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            
-                'title' => 'required',
-                'tags' => 'required',
-                'description' => 'required',
-                
-            
+            //
         ];
     }
-    public function FiltredAttributes( Post $post) {
 
-        $validatedData = $this->validated();
-        $validatedData['user_id'] = auth()->id();
-             
-         return $validatedData;
-    }
+    public function FiltredAttributes() {
+
+        if($this->hasFile('photo')){
+
+            $image = Images::create(['photo'=>$this->file('photo')->store('profile','public'),
+            'imageable_type' => 'App\Models\User                                                                                                                 ',
+            'imageable_id'=> auth()->user()->id]);
+   }
+
+}
 }

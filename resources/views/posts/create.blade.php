@@ -53,6 +53,20 @@
                         @error('tags')
 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
 @enderror 
+                        
+                        <div class="mb-6">
+                            <label for="photo" class="inline-block text-lg mb-2">
+                                Images
+                            </label>
+                            <input
+                                type="file"
+                                class="border border-gray-200 rounded p-2 w-full"
+                                name="photo[]" multiple
+                            />
+                        </div>
+@error('images')
+<p class="text-red-500 text-xs mt-1">{{$message}}</p>
+@enderror 
                        
                         <div class="mb-6">
                             <button
